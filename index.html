@@ -6,7 +6,6 @@
   <title>Street Label — Nome de rua estilo Google Maps</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
       --bg: #0e0f11;
       --surface: #17191c;
@@ -21,9 +20,7 @@
       --radius-lg: 16px;
       --font: 'Inter', system-ui, sans-serif;
     }
-
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
-
     body {
       background: var(--bg);
       color: var(--text);
@@ -33,8 +30,6 @@
       display: flex;
       flex-direction: column;
     }
-
-    /* ── Header ── */
     header {
       display: flex;
       align-items: center;
@@ -53,16 +48,12 @@
     .logo svg { width: 18px; height: 18px; fill: #fff; }
     header h1 { font-size: 17px; font-weight: 600; letter-spacing: -0.2px; }
     header span { font-size: 13px; color: var(--text-muted); margin-left: 4px; font-weight: 400; }
-
-    /* ── Layout ── */
     main {
       display: grid;
       grid-template-columns: 320px 1fr;
       flex: 1;
       overflow: hidden;
     }
-
-    /* ── Sidebar ── */
     aside {
       background: var(--surface);
       border-right: 1px solid var(--border);
@@ -70,7 +61,6 @@
       flex-direction: column;
       overflow-y: auto;
     }
-
     .upload-zone {
       margin: 20px;
       border: 1.5px dashed var(--border2);
@@ -86,7 +76,6 @@
     .upload-zone:hover, .upload-zone.drag { border-color: var(--accent); background: var(--accent-dim); }
     .upload-zone svg { display: block; margin: 0 auto 10px; opacity: 0.5; }
     .upload-zone strong { display: block; font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
-
     .section-label {
       font-size: 11px;
       font-weight: 600;
@@ -96,7 +85,6 @@
       padding: 0 20px;
       margin: 16px 0 10px;
     }
-
     .ctrl-group {
       padding: 0 20px 14px;
       display: flex;
@@ -110,7 +98,6 @@
       justify-content: space-between;
     }
     .ctrl-group label span { color: var(--text); font-weight: 500; }
-
     input[type="text"] {
       width: 100%;
       background: var(--surface2);
@@ -124,14 +111,12 @@
       transition: border-color 0.15s;
     }
     input[type="text"]:focus { border-color: var(--accent); }
-
     input[type="range"] {
       width: 100%;
       accent-color: var(--accent);
       height: 4px;
       cursor: pointer;
     }
-
     select {
       width: 100%;
       background: var(--surface2);
@@ -144,9 +129,7 @@
       outline: none;
       cursor: pointer;
     }
-
     .divider { border: none; border-top: 1px solid var(--border); margin: 4px 0; }
-
     .btn-dl {
       margin: 16px 20px 24px;
       width: calc(100% - 40px);
@@ -168,8 +151,6 @@
     .btn-dl:hover { opacity: 0.9; }
     .btn-dl:active { transform: scale(0.98); }
     .btn-dl:disabled { opacity: 0.35; cursor: default; }
-
-    /* ── Canvas area ── */
     .canvas-area {
       display: flex;
       align-items: center;
@@ -178,7 +159,6 @@
       background: repeating-conic-gradient(#1a1b1f 0% 25%, #141518 0% 50%) 0 0 / 28px 28px;
       overflow: auto;
     }
-
     .canvas-wrap {
       position: relative;
       line-height: 0;
@@ -187,9 +167,7 @@
       box-shadow: 0 0 0 1px var(--border2), 0 24px 64px rgba(0,0,0,0.6);
       max-width: 100%;
     }
-
     #previewCanvas { display: block; max-width: 100%; height: auto; }
-
     .empty-state {
       display: flex;
       flex-direction: column;
@@ -200,12 +178,16 @@
       text-align: center;
     }
     .empty-state svg { opacity: 0.25; }
-
-    /* ── Responsive ── */
+    .hint {
+      font-size: 11px;
+      color: var(--text-muted);
+      padding: 0 20px 10px;
+      line-height: 1.5;
+    }
     @media (max-width: 720px) {
       main { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
-      aside { border-right: none; border-bottom: 1px solid var(--border); max-height: 55vh; }
-      .canvas-area { min-height: 45vh; }
+      aside { border-right: none; border-bottom: 1px solid var(--border); max-height: 60vh; }
+      .canvas-area { min-height: 40vh; }
     }
   </style>
 </head>
@@ -215,74 +197,69 @@
   <div class="logo">
     <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
   </div>
-  <h1>Street Label <span>— sobreposição de nome de rua em foto</span></h1>
+  <h1>Street Label <span>— nome de rua estilo Google Maps</span></h1>
 </header>
 
 <main>
   <aside>
-    <!-- Upload -->
-    <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()" role="button" tabindex="0" aria-label="Importar foto">
+    <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()" role="button" tabindex="0">
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
       <strong>Importar foto</strong>
       Clique ou arraste uma imagem JPG/PNG
     </div>
     <input type="file" id="fileInput" accept="image/*" style="display:none">
 
-    <!-- Texto -->
     <p class="section-label">Texto</p>
     <div class="ctrl-group">
       <label>Nome da rua</label>
-      <input type="text" id="streetName" value="R. Tereza Ivancheac" placeholder="R. Nome da Rua">
+      <input type="text" id="streetName" value="R. Carlos Alberto Ribeiro Soares" placeholder="R. Nome da Rua">
     </div>
     <div class="ctrl-group">
-      <label>Estilo <span id="colorVal">—</span></label>
+      <label>Cor</label>
       <select id="textColor">
-        <option value="white">Branco — Google Maps padrão</option>
         <option value="#c8c8c8" selected>Cinza — Street View original</option>
+        <option value="white">Branco</option>
         <option value="#ffe082">Amarelo</option>
-        <option value="#80cbc4">Ciano</option>
       </select>
     </div>
 
     <hr class="divider">
 
-    <!-- Tamanho e rotação -->
-    <p class="section-label">Posição e tamanho</p>
+    <p class="section-label">Posição na foto</p>
     <div class="ctrl-group">
-      <label>Tamanho <span id="fontSizeVal">52px</span></label>
-      <input type="range" id="fontSize" min="16" max="140" value="52" step="1">
+      <label>Horizontal (âncora) <span id="posXVal">42%</span></label>
+      <input type="range" id="posX" min="5" max="95" value="42" step="1">
     </div>
     <div class="ctrl-group">
-      <label>Rotação <span id="rotationVal">-28°</span></label>
-      <input type="range" id="rotation" min="-70" max="70" value="-28" step="1">
-    </div>
-    <div class="ctrl-group">
-      <label>Horizontal <span id="posXVal">38%</span></label>
-      <input type="range" id="posX" min="5" max="95" value="38" step="1">
-    </div>
-    <div class="ctrl-group">
-      <label>Vertical <span id="posYVal">58%</span></label>
-      <input type="range" id="posY" min="5" max="95" value="58" step="1">
+      <label>Vertical (âncora) <span id="posYVal">72%</span></label>
+      <input type="range" id="posY" min="20" max="95" value="72" step="1">
     </div>
 
     <hr class="divider">
 
-    <!-- Aparência -->
-    <p class="section-label">Aparência</p>
+    <p class="section-label">Perspectiva 3D</p>
+    <p class="hint">Ajuste para o texto "deitar" no chão acompanhando a rua</p>
     <div class="ctrl-group">
-      <label>Opacidade <span id="opacityVal">72%</span></label>
-      <input type="range" id="opacity" min="10" max="100" value="72" step="1">
+      <label>Achatamento (profundidade) <span id="squishVal">82%</span></label>
+      <input type="range" id="squish" min="5" max="99" value="82" step="1">
     </div>
     <div class="ctrl-group">
-      <label>Perspectiva (escala X) <span id="scaleXVal">72%</span></label>
-      <input type="range" id="scaleX" min="20" max="100" value="72" step="1">
+      <label>Inclinação lateral <span id="skewVal">-18°</span></label>
+      <input type="range" id="skew" min="-60" max="60" value="-18" step="1">
     </div>
     <div class="ctrl-group">
-      <label>Espessura do outline <span id="outlineVal">médio</span></label>
-      <input type="range" id="outline" min="1" max="5" value="3" step="1">
+      <label>Tamanho base <span id="fontSizeVal">72px</span></label>
+      <input type="range" id="fontSize" min="20" max="200" value="72" step="1">
+    </div>
+    <div class="ctrl-group">
+      <label>Opacidade <span id="opacityVal">78%</span></label>
+      <input type="range" id="opacity" min="10" max="100" value="78" step="1">
+    </div>
+    <div class="ctrl-group">
+      <label>Espessura do outline <span id="outlineVal">3</span></label>
+      <input type="range" id="outline" min="1" max="8" value="3" step="1">
     </div>
 
-    <!-- Download -->
     <button class="btn-dl" id="dlBtn" disabled onclick="downloadImage()">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v10M7 15l5 5 5-5"/><path d="M5 20h14"/></svg>
       Baixar imagem
@@ -305,82 +282,107 @@
   const canvas = document.getElementById('previewCanvas');
   const ctx = canvas.getContext('2d');
 
-  const outlineLabels = ['', 'fino', 'leve', 'médio', 'forte', 'grosso'];
-
   function g(id) { return document.getElementById(id); }
   function gv(id) { return g(id).value; }
 
+  // Desenha texto com transformação de perspectiva real usando quadrilátero
+  // O texto é renderizado em canvas offscreen, depois projetado via setTransform
   function render() {
     if (!img) return;
-    canvas.width = img.naturalWidth;
-    canvas.height = img.naturalHeight;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const W = img.naturalWidth;
+    const H = img.naturalHeight;
+    canvas.width = W;
+    canvas.height = H;
+
+    ctx.clearRect(0, 0, W, H);
     ctx.drawImage(img, 0, 0);
 
-    const text = gv('streetName') || 'R. Nome da Rua';
-    const fontSize = parseInt(gv('fontSize'));
-    const rotation = (parseInt(gv('rotation')) * Math.PI) / 180;
-    const posX = (parseInt(gv('posX')) / 100) * canvas.width;
-    const posY = (parseInt(gv('posY')) / 100) * canvas.height;
-    const opacity = parseInt(gv('opacity')) / 100;
-    const scaleX = parseInt(gv('scaleX')) / 100;
-    const color = gv('textColor');
-    const outlineW = parseInt(gv('outline'));
+    const text      = gv('streetName') || 'R. Nome da Rua';
+    const fontSize  = parseInt(gv('fontSize'));
+    const posX      = (parseInt(gv('posX'))  / 100) * W;
+    const posY      = (parseInt(gv('posY'))  / 100) * H;
+    const squish    = parseInt(gv('squish'))  / 100;   // 0=flat, 1=upright
+    const skewDeg   = parseInt(gv('skew'));
+    const opacity   = parseInt(gv('opacity')) / 100;
+    const outlineW  = parseInt(gv('outline'));
+    const color     = gv('textColor');
+
+    // --- offscreen: texto normal ---
+    const off = document.createElement('canvas');
+    const oc  = off.getContext('2d');
+    oc.font = `italic bold ${fontSize}px Arial, sans-serif`;
+    const tw = oc.measureText(text).width + fontSize * 0.4;
+    const th = fontSize * 1.4;
+    off.width  = Math.ceil(tw);
+    off.height = Math.ceil(th);
+
+    oc.font = `italic bold ${fontSize}px Arial, sans-serif`;
+    oc.textAlign    = 'left';
+    oc.textBaseline = 'top';
+
+    // sombra
+    oc.shadowColor   = 'rgba(0,0,0,0.9)';
+    oc.shadowBlur    = fontSize * 0.25;
+    oc.shadowOffsetX = 2;
+    oc.shadowOffsetY = 2;
+    oc.strokeStyle   = 'rgba(0,0,0,0.7)';
+    oc.lineWidth     = outlineW * (fontSize / 30);
+    oc.lineJoin      = 'round';
+    oc.strokeText(text, fontSize * 0.1, fontSize * 0.1);
+
+    oc.shadowColor = 'transparent';
+    oc.fillStyle   = color;
+    oc.fillText(text, fontSize * 0.1, fontSize * 0.1);
+
+    // --- projetar com perspectiva ---
+    // Usamos a transformação:
+    //   skew horizontal (ângulo da rua)
+    //   squish vertical (profundidade / achatamento)
+    // via setTransform(a,b,c,d,e,f)
+    //   a = scaleX, b = skewY(sin do ângulo vertical),
+    //   c = skewX, d = scaleY
+    const skewRad = skewDeg * Math.PI / 180;
+
+    // a, b, c, d são a matriz 2x2:
+    // [a  c]   [cos(skew)   -sin(skew)*squish ]
+    // [b  d] = [sin(skew)    cos(skew)*squish ]
+    const a = Math.cos(skewRad);
+    const b = Math.sin(skewRad);
+    const c = -Math.sin(skewRad) * squish;
+    const d =  Math.cos(skewRad) * squish;
 
     ctx.save();
-    ctx.translate(posX, posY);
-    ctx.rotate(rotation);
-    ctx.scale(scaleX, 1);
     ctx.globalAlpha = opacity;
-
-    ctx.font = `italic bold ${fontSize}px 'Arial', sans-serif`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-
-    ctx.shadowColor = 'rgba(0,0,0,0.9)';
-    ctx.shadowBlur = fontSize * 0.3;
-    ctx.shadowOffsetX = 2;
-    ctx.shadowOffsetY = 2;
-
-    ctx.strokeStyle = 'rgba(0,0,0,0.65)';
-    ctx.lineWidth = fontSize * (outlineW * 0.025);
-    ctx.lineJoin = 'round';
-    ctx.strokeText(text, 0, 0);
-
-    ctx.shadowColor = 'transparent';
-    ctx.fillStyle = color;
-    ctx.fillText(text, 0, 0);
+    ctx.transform(a, b, c, d, posX, posY);
+    ctx.drawImage(off, -tw / 2, -th / 2);
     ctx.restore();
   }
 
   function bind(id, suffix, labelId) {
     g(id).addEventListener('input', () => {
-      g(labelId).textContent = id === 'outline'
-        ? outlineLabels[parseInt(gv(id))]
-        : gv(id) + suffix;
+      g(labelId).textContent = gv(id) + suffix;
       render();
     });
   }
-
+  bind('posX',     '%',  'posXVal');
+  bind('posY',     '%',  'posYVal');
+  bind('squish',   '%',  'squishVal');
+  bind('skew',     '°',  'skewVal');
   bind('fontSize', 'px', 'fontSizeVal');
-  bind('rotation', '°', 'rotationVal');
-  bind('posX', '%', 'posXVal');
-  bind('posY', '%', 'posYVal');
-  bind('opacity', '%', 'opacityVal');
-  bind('scaleX', '%', 'scaleXVal');
-  bind('outline', '', 'outlineVal');
+  bind('opacity',  '%',  'opacityVal');
+  bind('outline',  '',   'outlineVal');
   g('streetName').addEventListener('input', render);
   g('textColor').addEventListener('change', render);
 
   function loadImage(file) {
     if (!file || !file.type.startsWith('image/')) return;
     const reader = new FileReader();
-    reader.onload = (ev) => {
+    reader.onload = ev => {
       const i = new Image();
       i.onload = () => {
         img = i;
-        g('emptyState').style.display = 'none';
-        g('canvasWrap').style.display = 'block';
+        g('emptyState').style.display  = 'none';
+        g('canvasWrap').style.display  = 'block';
         g('dlBtn').disabled = false;
         render();
       };
@@ -392,14 +394,13 @@
   g('fileInput').addEventListener('change', e => loadImage(e.target.files[0]));
 
   const zone = g('uploadZone');
-  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag'); });
-  zone.addEventListener('dragleave', () => zone.classList.remove('drag'));
+  zone.addEventListener('dragover',  e => { e.preventDefault(); zone.classList.add('drag'); });
+  zone.addEventListener('dragleave', ()  => zone.classList.remove('drag'));
   zone.addEventListener('drop', e => {
     e.preventDefault();
     zone.classList.remove('drag');
     loadImage(e.dataTransfer.files[0]);
   });
-  zone.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') g('fileInput').click(); });
 
   function downloadImage() {
     if (!img) return;
